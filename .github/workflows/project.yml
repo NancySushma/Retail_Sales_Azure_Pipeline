@@ -1,0 +1,26 @@
+name: Retail Data Pipeline Check
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # Allows manual run in GitHub
+
+jobs:
+  validate-repo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Confirm README is Present
+        run: |
+          if [ ! -f README.md ]; then
+            echo "README.md is missing!"
+            exit 1
+          else
+            echo "README.md found ✅"
+          fi
+
+      - name: Print Folder Structure
+        run: ls -R
