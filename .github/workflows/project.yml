@@ -8,19 +8,18 @@ on:
 jobs:
   validate-repo:
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Confirm README is Present
-        run: |
-          if [ ! -f README.md ]; then
-            echo "README.md is missing!"
-            exit 1
-          else
-            echo "README.md found ✅"
-          fi
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
 
-      - name: Print Folder Structure
-        run: ls -R
+      - name: Install pandas
+        run: pip install pandas
+
+      - name: Validate CSV Schema
+        run: python scripts/validate_csv.py
